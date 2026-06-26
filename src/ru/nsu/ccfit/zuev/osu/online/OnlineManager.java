@@ -98,11 +98,11 @@ public class OnlineManager {
         failMessage = "";
 
         //TODO debug code
-		/*Debug.i("Received " + response.size() + " lines");
-		for(String str: response)
-		{
-			Debug.i(str);
-		}*/
+	/*Debug.i("Received " + response.size() + " lines");
+	for(String str: response)
+	{
+		Debug.i(str);
+	}*/
 
         if (response.size() == 0 || response.get(0).length() == 0) {
             failMessage = "Got empty response";
@@ -192,10 +192,17 @@ public class OnlineManager {
     public boolean sendRecord(BeatmapInfo beatmap, String scoreData, String replayPath) throws OnlineManagerException {
         Debug.i("Sending record...");
 
+        // Defensive: avoid NullPointerException if replayPath is null or empty
+        if (replayPath == null || replayPath.isEmpty()) {
+            failMessage = "Replay file not found";
+            Debug.e("Replay path is null or empty");
+            return false;
+        }
+
         File replayFile = new File(replayPath);
         if (!replayFile.exists()) {
             failMessage = "Replay file not found";
-            Debug.e("Replay file not found");
+            Debug.e("Replay file not found: " + replayPath);
             return false;
         }
 
