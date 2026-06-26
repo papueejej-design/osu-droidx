@@ -21,7 +21,6 @@ import com.osudroid.difficulty.attributes.DifficultyAttributes;
 import com.osudroid.difficulty.attributes.DroidDifficultyAttributes;
 import com.osudroid.difficulty.attributes.PerformanceAttributes;
 import com.osudroid.difficulty.attributes.StandardDifficultyAttributes;
-import com.osudroid.mods.ModAutoplay;
 import com.osudroid.mods.ModCustomSpeed;
 import com.osudroid.mods.ModDifficultyAdjust;
 import com.osudroid.mods.ModFlashlight;
@@ -552,7 +551,7 @@ public class ScoringScene {
             ResourceManager.getInstance().getSound("applause").play();
 
             // Save score
-            if (stat.getTotalScoreWithMultiplier() <= 0 || mods.contains(ModAutoplay.class) ||
+            if (stat.getTotalScoreWithMultiplier() <= 0 ||
                     (Multiplayer.isMultiplayer &&
                         ((Multiplayer.room != null && Multiplayer.room.isTeamVersus()) || game.hasFailed))) {
                 return;
