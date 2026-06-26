@@ -15,59 +15,77 @@ jobs:
     name: Assemble Debug APK
     runs-on: ubuntu-latest
     steps:
-    - name: Checkout
-      uses: actions/checkout@v6
+      - name: Checkout
+        uses: actions/checkout@v4
 
-    - name: Setup JDK 17 and Gradle
-      uses: ./.github/actions/setup-java-gradle
+      - name: Setup JDK 17 and Gradle
+        uses: ./.github/actions/setup-java-gradle
 
-    - name: Assemble debug APK
-      run: ./gradlew assembleDebug
+      - name: Assemble Debug APK
+        run: ./gradlew assembleDebug
+
+      - name: Upload Debug APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: debug-apk
+          path: "**/build/outputs/apk/debug/*.apk"
 
   assemble-pre-release:
     name: Assemble Pre-Release APK
     runs-on: ubuntu-latest
     steps:
-    - name: Checkout
-      uses: actions/checkout@v6
+      - name: Checkout
+        uses: actions/checkout@v4
 
-    - name: Setup JDK 17 and Gradle
-      uses: ./.github/actions/setup-java-gradle
+      - name: Setup JDK 17 and Gradle
+        uses: ./.github/actions/setup-java-gradle
 
-    - name: Assemble pre-release APK
-      run: ./gradlew assemblePre_release
+      - name: Assemble Pre-Release APK
+        run: ./gradlew assemblePre_release
+
+      - name: Upload Pre-Release APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: pre-release-apk
+          path: "**/build/outputs/apk/pre_release/*.apk"
 
   assemble-release:
     name: Assemble Release APK
     runs-on: ubuntu-latest
     steps:
-    - name: Checkout
-      uses: actions/checkout@v6
+      - name: Checkout
+        uses: actions/checkout@v4
 
-    - name: Set up JDK 17 and Gradle
-      uses: ./.github/actions/setup-java-gradle
+      - name: Setup JDK 17 and Gradle
+        uses: ./.github/actions/setup-java-gradle
 
-    - name: Assemble release APK
-      run: ./gradlew assembleRelease
+      - name: Assemble Release APK
+        run: ./gradlew assembleRelease
+
+      - name: Upload Release APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: release-apk
+          path: "**/build/outputs/apk/release/*.apk"
 
   unit-test:
     name: Unit Tests
     runs-on: ubuntu-latest
     steps:
-    - name: Checkout
-      uses: actions/checkout@v6
+      - name: Checkout
+        uses: actions/checkout@v4
 
-    - name: Set up JDK 17 and Gradle
-      uses: ./.github/actions/setup-java-gradle
+      - name: Setup JDK 17 and Gradle
+        uses: ./.github/actions/setup-java-gradle
 
-    - name: Run tests
-      run: ./gradlew testDebugUnitTest
+      - name: Run Tests
+        run: ./gradlew testDebugUnitTest
 
-    - name: Upload test results
-      if: ${{ always() }}
-      uses: actions/upload-artifact@v7
-      with:
-        name: reports
-        path: |
-          **/build/reports/
-          **/build/test-results/
+      - name: Upload Test Results
+        if: ${{ always() }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: reports
+          path: |
+            **/build/reports/
+            **/build/test-results/
